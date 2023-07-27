@@ -132,7 +132,6 @@ function Home(): JSX.Element {
               <Text style={styles.btnTitle}>Tải câu chuyện cười tiếp theo</Text>
             </TouchableOpacity>
           </View>
-          {disableBtn && <GripData gripView={gripView} />}
         </View>
         <Footer />
       </ScrollView>
