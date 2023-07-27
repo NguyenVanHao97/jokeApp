@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {FC} from 'react';
 import {scale} from '../ultils';
-import {JokeType} from '../screen/home/contants';
+import {JokeType} from '../model/contants';
 
 interface props {
   gripView: JokeType[];

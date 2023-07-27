@@ -2,17 +2,21 @@
 import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {JokeType, listJoke} from './contants';
+import {JokeType, listJoke} from '../../model/contants';
 import {scale} from '../../ultils';
 import DefaultJoke from '../../components/DefaultJoke';
 import Loading from '../../components/Loading';
 import GripData from '../../components/GripData';
+import Header from '../../components/Header';
+import Banner from '../../components/Banner';
+import Footer from '../../components/Footer';
 
 function Home(): JSX.Element {
   const [jokeList, setJokeList] = useState(listJoke);
@@ -94,37 +98,44 @@ function Home(): JSX.Element {
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <View style={styles.viewJoke}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              {!disableBtn ? (
-                <Text style={styles.joke}>{jokeView?.joke}</Text>
-              ) : (
-                <DefaultJoke />
-              )}
-            </>
-          )}
-        </View>
+      <ScrollView>
+        <Header />
+        <Banner />
+        <View style={styles.container}>
+          <View style={styles.viewJoke}>
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                {!disableBtn ? (
+                  <Text style={styles.joke}>{jokeView?.joke}</Text>
+                ) : (
+                  <DefaultJoke />
+                )}
+              </>
+            )}
+          </View>
 
-        <View style={styles.btnSection}>
-          <TouchableOpacity
-            disabled={disableBtn || loading}
-            onPress={() => voteJoke(jokeView?.id)}
-            style={styles.btnLike}>
-            <Text style={styles.btnTitle}>Bạn thích câu chuyện này chứ ?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            disabled={disableBtn || loading}
-            onPress={() => loadNextJoke(jokeView?.id)}
-            style={styles.btnReadMore}>
-            <Text style={styles.btnTitle}>Tải câu chuyện cười tiếp theo</Text>
-          </TouchableOpacity>
+          <View style={styles.btnSection}>
+            <TouchableOpacity
+              disabled={disableBtn || loading}
+              onPress={() => voteJoke(jokeView?.id)}
+              style={styles.btnLike}>
+              <Text style={styles.btnTitle}>
+                Bạn thích câu chuyện này chứ ?
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={disableBtn || loading}
+              onPress={() => loadNextJoke(jokeView?.id)}
+              style={styles.btnReadMore}>
+              <Text style={styles.btnTitle}>Tải câu chuyện cười tiếp theo</Text>
+            </TouchableOpacity>
+          </View>
+          {disableBtn && <GripData gripView={gripView} />}
         </View>
-        {disableBtn && <GripData gripView={gripView} />}
-      </View>
+        <Footer />
+      </ScrollView>
     </SafeAreaView>
   );
 }
